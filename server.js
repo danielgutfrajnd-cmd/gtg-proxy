@@ -13,7 +13,13 @@ app.get("/gtg-test", async (req, res) => {
     const url =
       "https://nomads.ncep.noaa.gov/pub/data/nccf/com/dafs/prod/dafs.20260104/00/dafs.t00z.gtg.3km.conus.f012.grib2";
 
-    const r = await fetch(url);
+    const r = await fetch(url, {
+  headers: {
+    "User-Agent": "gtg-proxy/1.0 (contact: daniel@example.com)",
+    "Accept": "*/*"
+  }
+});
+
     res.json({
       status: r.status,
       ok: r.ok,
