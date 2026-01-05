@@ -1,3 +1,12 @@
+import express from "express";
+
+const app = express();
+const PORT = process.env.PORT || 10000;
+
+app.get("/health", (req, res) => {
+  res.json({ ok: true });
+});
+
 app.get("/gtg-test", async (req, res) => {
   try {
     const url =
@@ -5,12 +14,11 @@ app.get("/gtg-test", async (req, res) => {
 
     const r = await fetch(url, {
       headers: {
-        // Make it look like a normal browser request
         "User-Agent":
           "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36",
-        "Accept": "*/*",
+        Accept: "*/*",
         "Accept-Language": "en-US,en;q=0.9",
-        "Referer": "https://www.noaa.gov/",
+        Referer: "https://www.noaa.gov/",
       },
     });
 
@@ -23,4 +31,8 @@ app.get("/gtg-test", async (req, res) => {
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
+});
+
+app.listen(PORT, () => {
+  console.log("GTG proxy running on", PORT);
 });
